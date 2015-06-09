@@ -1,0 +1,13 @@
+{
+  "name": "DirectionsTracker",
+  "version": "0.0.0",
+  "description": "Track google directions api result over time",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yacomink/directions-tracker"
+  },
+  "devDependencies": {
+    "mongodb": "~2.0"
+  },
+  "private": true
+}
