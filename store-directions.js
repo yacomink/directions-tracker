@@ -1,5 +1,6 @@
 var rest = require('restler');
 var _ = require('lodash');
+var pmongo = require('promised-mongo');
 
 var api_url = "https://maps.googleapis.com/maps/api/directions/json"
 
@@ -20,6 +21,9 @@ var features = [
 	['exit toward <b>Triboro Br', 'triboro']
 ];
 
+var db = pmongo(process.env.MONGO_DSN, [process.env.ENV]);
+var saved = 0;
+
 var handle_response = function(result, response, direction) {
 
 	var route = result.routes[0].legs[0];
@@ -28,8 +32,6 @@ var handle_response = function(result, response, direction) {
 		duration_seconds = route.duration.value,
 		meters = route.distance.value;
 	
-	console.log([duration_seconds, meters].join(' '));
-
 	_.each(route.steps, function(leg){
 		english += leg.html_instructions + "\n";
 	});
@@ -41,10 +43,18 @@ var handle_response = function(result, response, direction) {
 		}
 	})
 
-	console.log(route_features);
-	console.log("\n\n");
+	db.collection(process.env.ENV).save({
+		meta: {
+			route_direction:direction,
+			duration_seconds: duration_seconds,
+			meters: meters,
+			features: route_features,
+		},
+		route: route
+	});
 
 };
+
 
 rest.get(api_url, {
 	query: {
@@ -68,4 +78,4 @@ rest.get(api_url, {
 	handle_response(a,b,'backward');
 })
 
-
+setTimeout(process.exit, 10000, 1);
