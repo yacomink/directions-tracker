@@ -1,4 +1,4 @@
-#!/app/bin/node
+#!/usr/bin/env node
 var rest = require('restler');
 var _ = require('lodash');
 var pmongo = require('promised-mongo');
