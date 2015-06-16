@@ -1,3 +1,2 @@
 #!/usr/bin/env sh
-npm install
 node store-directions.js
