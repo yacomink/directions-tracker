@@ -7,7 +7,9 @@
     "url": "https://github.com/yacomink/directions-tracker"
   },
   "devDependencies": {
-    "mongodb": "~2.0"
+    "mongodb": "~2.0",
+    "restler": "~3.2.2",
+    "lodash": "~3.9.3"
   },
   "private": true
 }
